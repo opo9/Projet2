@@ -25,7 +25,13 @@ require_once _TEMPLATEPATH_ . '\header.php';
                 <div class="card-body p-4">
                     <a href="index.php?controller=book&action=edit&id=<?= $book->getId(); ?>" class="btn btn-primary">Modifier</a>
                     <a href="index.php?controller=book&action=delete&id=<?= $book->getId(); ?>" class="btn btn-primary">Supprimer</a>
+                </div>
 
+                <div class="card-body p-4">
+                    Genre :
+                    <?php foreach ($genres as $genre) : ?>
+                        <span><?php echo $genre ?></span>
+                    <?php endforeach; ?>
                 </div>
             </div>
         <?php } ?>

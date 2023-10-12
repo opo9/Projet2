@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Repository\BookRepository;
 use App\Repository\CommentRepository;
 use App\Entity\Book;
+use App\Entity\BookGenre;
 use App\Entity\User;
 use App\Entity\Comment;
 use App\Entity\Rating;
 use App\Tools\FileTools;
 use App\Repository\TypeRepository;
 use App\Repository\AuthorRepository;
+use App\Repository\BookGenreRepository;
 use App\Repository\RatingRepository;
 
 
@@ -64,7 +66,9 @@ class BookController extends Controller
                 $id = (int)$_GET['id'];
                 // Charger le livre par un appel au repository findOneById
                 $bookRepository = new BookRepository();
+                $bookGenreRepository = new BookGenreRepository();
                 $book = $bookRepository->findOneById($id);
+                $genres = $bookGenreRepository->findAllGenreBook($id);
 
                 if ($book) {
                     //@todo créer une nouvelle instance de CommentRepository
@@ -130,6 +134,7 @@ class BookController extends Controller
                     //@todo remplacer petit à petit les valeurs 
                     $this->render('book/show', [
                         'book' => $book,
+                        'genres' => $genres,
                         'comments' => $commentaires,
                         'rating' => $ratingUser,
                         'averageRate' => $ratingAverage,
@@ -222,10 +227,10 @@ class BookController extends Controller
                     // On lance l'upload de fichier
                     if (isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name'] !== '') {
                         //@todo appeler la méthode static uploadImage de la classe FileTools et stocker le résultat dans $res
-
+                        $res = FileTools::uploadImage(_BOOKS_IMAGES_FOLDER_,$_FILES['file'] );
                         if (empty($res['errors'])) {
                             //@todo décommenter cette ligne
-                            //$book->setImage($res['fileName']);
+                            $book->setImage($res['fileName']);
                         } else {
                             $fileErrors = $res['errors'];
                         }
