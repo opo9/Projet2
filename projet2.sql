@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 12 oct. 2023 à 16:47
+-- Généré le : jeu. 12 oct. 2023 à 18:33
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -150,8 +150,18 @@ CREATE TABLE IF NOT EXISTS `book_genre` (
   `book_id` int UNSIGNED NOT NULL,
   `genre_id` int UNSIGNED NOT NULL,
   PRIMARY KEY (`book_id`,`genre_id`),
+  UNIQUE KEY `unique_book_genre` (`book_id`,`genre_id`),
   KEY `genre_id` (`genre_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `book_genre`
+--
+
+INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES
+(94, 1),
+(92, 2),
+(94, 2);
 
 -- --------------------------------------------------------
 
@@ -183,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`id`),
   KEY `book_id` (`book_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `comment`
@@ -191,7 +201,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
 
 INSERT INTO `comment` (`id`, `comment`, `user_id`, `book_id`, `created_at`) VALUES
 (12, 'J\'ai adoré cette BD ! Il faut vraiment tester ça !', 2, 82, '2023-09-20 13:41:21'),
-(13, 'ee', 1, 85, '2023-10-11 16:08:46');
+(13, 'ee', 1, 85, '2023-10-11 16:08:46'),
+(14, 't', 1, 94, '2023-10-12 17:22:33');
 
 -- --------------------------------------------------------
 
@@ -204,7 +215,15 @@ CREATE TABLE IF NOT EXISTS `genre` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `genre`
+--
+
+INSERT INTO `genre` (`id`, `name`) VALUES
+(1, 'genre1'),
+(2, 'genre2');
 
 -- --------------------------------------------------------
 
@@ -253,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `rating` (
   PRIMARY KEY (`id`),
   KEY `book_id` (`book_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `rating`
@@ -263,7 +282,8 @@ INSERT INTO `rating` (`id`, `rate`, `user_id`, `book_id`, `created_at`) VALUES
 (8, 5, 2, 82, '2023-09-21 10:35:57'),
 (9, 3, 1, 82, '2023-09-21 11:09:28'),
 (10, 3, 1, 83, '2023-10-11 16:07:36'),
-(11, 2, 1, 85, '2023-10-11 16:08:40');
+(11, 2, 1, 85, '2023-10-11 16:08:40'),
+(12, 3, 1, 94, '2023-10-12 17:22:29');
 
 -- --------------------------------------------------------
 
